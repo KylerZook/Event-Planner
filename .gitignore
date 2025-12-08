@@ -4,7 +4,7 @@ package-lock.json
 yarn.lock
 
 # Environment variables
-.env
+# NOTE: backend/.env is INCLUDED for professor to run the project
 .env.local
 .env.development.local
 .env.test.local

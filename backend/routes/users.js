@@ -87,6 +87,29 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// GET /api/users/search - Search for users
+router.get('/search', authenticateToken, async (req, res) => {
+  try {
+    const query = req.query.q;
+
+    if (!query || query.trim().length === 0) {
+      return res.json([]);
+    }
+
+    const users = await User.find({
+      $or: [
+        { username: { $regex: query, $options: 'i' } },
+        { email: { $regex: query, $options: 'i' } }
+      ],
+      _id: { $ne: req.user.id } // Exclude current user
+    }).select('username email').limit(10);
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // GET /api/users/:id - Get user profile
 router.get('/:id', authenticateToken, async (req, res) => {
   try {
@@ -118,8 +141,36 @@ router.put('/:id/update', authenticateToken, async (req, res) => {
 // POST /api/users/:id/friend-request - Send friend request
 router.post('/:id/friend-request', authenticateToken, async (req, res) => {
   try {
-    // TODO: Implement friend request logic
-    res.status(501).json({ message: 'Not implemented yet' });
+    const targetUserId = req.params.id;
+    const requesterId = req.user.id;
+
+    // Can't send request to yourself
+    if (targetUserId === requesterId) {
+      return res.status(400).json({ message: 'Cannot send friend request to yourself' });
+    }
+
+    // Check if already friends
+    const requester = await User.findById(requesterId);
+    if (requester.friends.includes(targetUserId)) {
+      return res.status(400).json({ message: 'Already friends with this user' });
+    }
+
+    // Check if request already sent
+    const targetUser = await User.findById(targetUserId);
+    if (!targetUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (targetUser.pendingRequests.includes(requesterId)) {
+      return res.status(400).json({ message: 'Friend request already sent' });
+    }
+
+    // Add to pending requests
+    await User.findByIdAndUpdate(targetUserId, {
+      $push: { pendingRequests: requesterId }
+    });
+
+    res.json({ message: 'Friend request sent successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -128,8 +179,26 @@ router.post('/:id/friend-request', authenticateToken, async (req, res) => {
 // POST /api/users/:id/accept-friend - Accept friend request
 router.post('/:id/accept-friend', authenticateToken, async (req, res) => {
   try {
-    // TODO: Implement accept friend logic
-    res.status(501).json({ message: 'Not implemented yet' });
+    const currentUserId = req.user.id;
+    const friendId = req.params.id;
+
+    // Verify the friend request exists
+    const currentUser = await User.findById(currentUserId);
+    if (!currentUser.pendingRequests.includes(friendId)) {
+      return res.status(400).json({ message: 'No friend request from this user' });
+    }
+
+    // Add to friends for both users
+    await User.findByIdAndUpdate(currentUserId, {
+      $push: { friends: friendId },
+      $pull: { pendingRequests: friendId }
+    });
+
+    await User.findByIdAndUpdate(friendId, {
+      $push: { friends: currentUserId }
+    });
+
+    res.json({ message: 'Friend request accepted' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

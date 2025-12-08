@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function EventDetails({ user }) {
@@ -67,6 +67,18 @@ function EventDetails({ user }) {
 
   return (
     <div className="event-details-container">
+      <nav style={{ marginBottom: '20px' }}>
+        <Link to="/dashboard">
+          <button className="secondary">← Dashboard</button>
+        </Link>
+        <Link to={`/profile/${user.id}`}>
+          <button className="secondary">My Profile</button>
+        </Link>
+        <Link to="/event/create">
+          <button className="secondary">Create Event</button>
+        </Link>
+      </nav>
+
       <h2>{event.title}</h2>
 
       <div className="event-info">

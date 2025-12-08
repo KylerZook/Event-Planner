@@ -2,86 +2,108 @@
 
 A MERN stack application for planning parties and social gatherings with friends.
 
-## Team Members
-
-- **Kyler & Paddy**: Lead Frontend Developers (Authentication & Profile UI, State Management)
-- **Christian**: Full-Stack Developer (Express API Routes, Axios integration, Database)
-- **Sydney**: Database & Event Specialist (MongoDB Schema Design, CRUD, RSVP system)
-- **Dami**: Frontend/UX Designer & Documentation Lead (Forms & Dashboard UI, Styling, Documentation)
-
-## Project Overview
-
-Event Planner makes it super easy to plan parties and social gatherings with friends. Users can:
-- Create and manage their profile
-- Build a friends list
-- Create events and invite friends
-- RSVP to events
-- View all their events in one personalized dashboard
-
-## Tech Stack
-
-- **Frontend**: React 18 + Vite + React Router
-- **Backend**: Node.js + Express.js
-- **Database**: MongoDB + Mongoose
-- **HTTP Client**: Axios
-- **Authentication**: JWT (JSON Web Tokens)
-
----
-
-## Quick Start
-
 ### Prerequisites
-
-- **Node.js** (v18 or higher)
+- **Node.js** - [Download here](https://nodejs.org/)
 - **npm** (comes with Node.js)
-- **MongoDB** (running locally on port 27017, or use MongoDB Atlas)
+- ⚠️ **No MongoDB installation required!** (Uses cloud database)
 
-### Installation
+### Installation & Setup (5 minutes)
 
-1. **Clone/Navigate to the project directory**
-   ```bash
-   cd "Final Project"
-   ```
-
-2. **Set up Backend**
+1. **Install Backend Dependencies**
    ```bash
    cd backend
    npm install
-   cp .env.example .env
-   # Edit .env and update values if needed
    ```
 
-3. **Set up Frontend**
+2. **Install Frontend Dependencies**
    ```bash
    cd ../frontend
    npm install
    ```
 
-4. **Start MongoDB**
-   ```bash
-   # If using local MongoDB:
-   mongod
+3. **Database Configuration**
+   - ✅ The `.env` file is already configured with MongoDB Atlas (cloud database)
+   - ✅ No additional setup needed!
 
-   # Or use MongoDB Atlas by updating MONGODB_URI in backend/.env
-   ```
+4. **Start the Application**
 
-5. **Run the Application**
-
-   **Terminal 1 - Backend:**
+   **Terminal 1 - Start Backend:**
    ```bash
    cd backend
    npm run dev
    ```
 
-   **Terminal 2 - Frontend:**
+   Expected output:
+   ```
+   ✅ Server is running on port 5001
+   ✅ MongoDB Connected: ac-amjv27z-shard-00-00.krjcd7n.mongodb.net
+   ```
+
+   **Terminal 2 - Start Frontend:**
    ```bash
    cd frontend
    npm run dev
    ```
 
-6. **Access the Application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
+   Expected output:
+   ```
+   ➜ Local: http://localhost:3000/
+   ```
+
+5. **Open the Application**
+   - Navigate to: **http://localhost:3000**
+   - Sign up to create an account
+   - Start using the app!
+
+### App Functionalities
+
+1. **Register** a new account (username, email, password)
+2. Click **"Find Friends"** → Search for another user (or create a second account in incognito window)
+3. Send a **friend request**
+4. Go to **"My Profile"** → Accept the friend request
+5. Click **"Create Event"** → Fill in details and invite your friend
+6. View **event details** and RSVP
+
+### Troubleshooting
+
+**Port 5001 already in use:**
+```bash
+lsof -ti:5001 | xargs kill -9
+```
+
+**Port 3000 already in use:**
+- Vite will automatically suggest an alternative port
+
+---
+
+## Project Overview
+
+### Team Members
+
+- **Kyler Zook & Paddy**: Lead Frontend Developers (Authentication & Profile UI, State Management)
+- **Christian Streby**: Full-Stack Developer (Express API Routes, Axios integration, Database)
+- **Sydney Bair**: Database & Event Specialist (MongoDB Schema Design, CRUD, RSVP system)
+- **Dami**: Frontend/UX Designer & Documentation Lead (Forms & Dashboard UI, Styling, Documentation)
+
+### Features Implemented
+
+- **User Authentication** - Register, login with JWT tokens
+- **Friend System** - Search users, send/accept friend requests
+- **Event Management** - Create events with title, date, location, description
+- **Friend Invitations** - Invite friends from your friends list to events
+- **RSVP System** - Attend, decline, or mark as pending
+- **Dashboard** - View all your events (hosting and invited)
+- **Navigation** - Seamless navigation between all pages
+- **UI** - Clean black & white interface
+
+### Tech Stack
+
+- **Frontend**: React 18 + Vite + React Router
+- **Backend**: Node.js + Express.js
+- **Database**: MongoDB Atlas (Cloud)
+- **HTTP Client**: Axios
+- **Authentication**: JWT (JSON Web Tokens)
+- **Styling**: Custom CSS (Monochrome design)
 
 ---
 

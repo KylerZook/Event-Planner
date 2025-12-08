@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import FriendSearch from './FriendSearch';
 
 function Dashboard({ user, onLogout }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showFriendSearch, setShowFriendSearch] = useState(false);
 
   useEffect(() => {
     fetchEvents();
@@ -33,11 +35,21 @@ function Dashboard({ user, onLogout }) {
       <header>
         <h1>Welcome, {user.username}!</h1>
         <nav>
-          <Link to={`/profile/${user.id}`}>My Profile</Link>
-          <Link to="/event/create">Create Event</Link>
-          <button onClick={onLogout}>Logout</button>
+          <Link to={`/profile/${user.id}`}>
+            <button className="secondary">My Profile</button>
+          </Link>
+          <button onClick={() => setShowFriendSearch(true)}>Find Friends</button>
+          <Link to="/event/create">
+            <button>Create Event</button>
+          </Link>
+          <button className="secondary" onClick={onLogout}>Logout</button>
         </nav>
       </header>
+
+      <FriendSearch
+        isOpen={showFriendSearch}
+        onClose={() => setShowFriendSearch(false)}
+      />
 
       <main>
         <h2>Your Events</h2>

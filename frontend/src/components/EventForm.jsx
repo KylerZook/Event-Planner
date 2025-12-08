@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function EventForm({ user }) {
@@ -10,14 +10,45 @@ function EventForm({ user }) {
     description: ''
   });
   const [invitedFriends, setInvitedFriends] = useState([]);
+  const [friends, setFriends] = useState([]);
+  const [loadingFriends, setLoadingFriends] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  // Fetch user's friends when component loads
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`/api/users/${user.id}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setFriends(response.data.friends || []);
+        setLoadingFriends(false);
+      } catch (error) {
+        console.error('Error fetching friends:', error);
+        setLoadingFriends(false);
+      }
+    };
+
+    fetchFriends();
+  }, [user.id]);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+  };
+
+  const handleFriendToggle = (friendId) => {
+    if (invitedFriends.includes(friendId)) {
+      // Remove friend from invited list
+      setInvitedFriends(invitedFriends.filter(id => id !== friendId));
+    } else {
+      // Add friend to invited list
+      setInvitedFriends([...invitedFriends, friendId]);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -41,6 +72,15 @@ function EventForm({ user }) {
 
   return (
     <div className="event-form-container">
+      <nav style={{ marginBottom: '20px' }}>
+        <Link to="/dashboard">
+          <button type="button" className="secondary">← Dashboard</button>
+        </Link>
+        <Link to={`/profile/${user.id}`}>
+          <button type="button" className="secondary">My Profile</button>
+        </Link>
+      </nav>
+
       <h2>Create New Event</h2>
       {error && <div className="error">{error}</div>}
 
@@ -92,10 +132,32 @@ function EventForm({ user }) {
           />
         </div>
 
-        {/* TODO: Add friend selection component */}
         <div className="form-group">
           <label>Invite Friends:</label>
-          <p>TODO: Add friend selection from your friends list</p>
+          {loadingFriends ? (
+            <p>Loading friends...</p>
+          ) : friends.length === 0 ? (
+            <p>You don't have any friends yet. Add friends to invite them to events!</p>
+          ) : (
+            <div className="friends-checklist">
+              {friends.map(friend => (
+                <div key={friend._id} className="friend-checkbox">
+                  <input
+                    type="checkbox"
+                    id={`friend-${friend._id}`}
+                    checked={invitedFriends.includes(friend._id)}
+                    onChange={() => handleFriendToggle(friend._id)}
+                  />
+                  <label htmlFor={`friend-${friend._id}`}>
+                    {friend.username} ({friend.email})
+                  </label>
+                </div>
+              ))}
+              <p className="invite-count">
+                {invitedFriends.length} friend{invitedFriends.length !== 1 ? 's' : ''} selected
+              </p>
+            </div>
+          )}
         </div>
 
         <button type="submit">Create Event</button>

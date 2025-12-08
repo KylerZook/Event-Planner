@@ -11,12 +11,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-  color: #333;
+  color: #000;
 }
 
 .App {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 
 /* Container Styles */
@@ -54,27 +54,79 @@ body {
 
 /* Button Styles */
 button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  padding: 12px 24px;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #000;
+  border-radius: 0;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 600;
   margin-right: 10px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #fff;
+  color: #000;
+}
+
+button.secondary {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+}
+
+button.secondary:hover {
+  background-color: #000;
+  color: #fff;
 }
 
 /* Error Messages */
 .error {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
+  background-color: #000;
+  color: #fff;
+  padding: 15px;
+  border: 2px solid #000;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Dashboard Header */
+.dashboard-container header {
+  border-bottom: 3px solid #000;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.dashboard-container header h1 {
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.dashboard-container nav,
+nav {
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.dashboard-container nav a,
+nav a {
+  text-decoration: none;
+}
+
+/* Page Navigation */
+.event-form-container nav,
+.event-details-container nav,
+.profile-container nav {
+  border-bottom: 2px solid #000;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 /* Event Cards */
@@ -86,14 +138,270 @@ button:hover {
 }
 
 .event-card {
-  background: white;
+  background: #fff;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 2px solid #000;
+  transition: transform 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 #000;
 }
 
 .event-card h3 {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-/* TODO: Add more styling as needed */
+.event-card p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.event-card a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.event-card a:hover {
+  background-color: #fff;
+  color: #000;
+  outline: 2px solid #000;
+}
+
+/* Friend Selection Component */
+.friends-checklist {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 2px solid #000;
+  padding: 15px;
+  background-color: #fff;
+}
+
+.friend-checkbox {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #000;
+  transition: all 0.2s;
+}
+
+.friend-checkbox:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.friend-checkbox input[type="checkbox"] {
+  width: auto;
+  margin-right: 15px;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.friend-checkbox label {
+  margin: 0;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+}
+
+.invite-count {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #000;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Friend Search Modal */
+.friend-search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.friend-search-content {
+  background-color: #fff;
+  border: 3px solid #000;
+  padding: 30px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.friend-search-content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 3px solid #000;
+  padding-bottom: 15px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #000;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: inset 3px 3px 0 #000;
+}
+
+.search-results {
+  margin-top: 20px;
+}
+
+.user-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 2px solid #000;
+  background-color: #fff;
+}
+
+.user-result:hover {
+  background-color: #f5f5f5;
+}
+
+.user-result span {
+  font-weight: 600;
+}
+
+.user-result button {
+  margin: 0;
+}
+
+.message {
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #000;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Event Details Styling */
+.event-info {
+  background-color: #fff;
+  border: 2px solid #000;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.event-info p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.rsvp-section {
+  background-color: #f5f5f5;
+  border: 2px solid #000;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.rsvp-section h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.attendees-section {
+  border: 2px solid #000;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.attendees-section h3 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+}
+
+.attendee-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 1px solid #000;
+  background-color: #fff;
+}
+
+.attendee-item span {
+  font-weight: 600;
+}
+
+.status {
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status.attending {
+  background-color: #000;
+  color: #fff;
+}
+
+.status.not-attending {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.status.pending {
+  background-color: #f5f5f5;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.host-actions {
+  margin-top: 20px;
+}
+
+.delete-button {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+}
+
+.delete-button:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+}
