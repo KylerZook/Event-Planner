@@ -1,5 +1,11 @@
 # Event Planner: The Social Party Planner
 ## Youtube Link: https://youtu.be/o2SsD6Tzscs?si=fYwyMM-JwCLIhXAc
+### Team Members
+- **Kyler Zook & Patrick Garcia**: Lead Frontend Developers (Authentication & Profile UI, State Management)
+- **Christian Streby**: Full-Stack Developer (Express API Routes, Axios integration, Database)
+- **Sydney Bair**: Database & Event Specialist (MongoDB Schema Design, CRUD, RSVP system)
+- **Dami Adepoju**: Frontend/UX Designer & Documentation Lead (Forms & Dashboard UI, Styling, Documentation)
+
 A MERN stack application for planning parties and social gatherings with friends.
 
 ### Prerequisites
@@ -78,12 +84,7 @@ lsof -ti:5001 | xargs kill -9
 
 ## Project Overview
 
-### Team Members
 
-- **Kyler Zook & Patrick Garcia**: Lead Frontend Developers (Authentication & Profile UI, State Management)
-- **Christian Streby**: Full-Stack Developer (Express API Routes, Axios integration, Database)
-- **Sydney Bair**: Database & Event Specialist (MongoDB Schema Design, CRUD, RSVP system)
-- **Dami Adepoju**: Frontend/UX Designer & Documentation Lead (Forms & Dashboard UI, Styling, Documentation)
 
 ### Features Implemented
 
